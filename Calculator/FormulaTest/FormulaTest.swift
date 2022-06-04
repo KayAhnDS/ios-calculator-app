@@ -47,6 +47,5 @@ class FormulaTest: XCTestCase {
         XCTAssertThrowsError(try equationTest.result()) { error in
             XCTAssertEqual(error as? ValueError, ValueError.divideByZero)
         }
-
     }
 }

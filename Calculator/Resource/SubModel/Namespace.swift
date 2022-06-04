@@ -25,3 +25,12 @@ struct NumberNamespace {
     
     private init() { }
 }
+
+
+struct SymbolNamespace {
+    static let empty: String = ""
+    static let exclamation: String = "!"
+    static let ampersand: String = "&"
+    
+    private init() { }
+}

@@ -7,8 +7,8 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var currentString: String = ""
-    var totalString: String = ""
+    var currentString: String = SymbolNamespace.empty
+    var totalString: String = SymbolNamespace.empty
     
     @IBOutlet var stackView: UIStackView!
     
@@ -48,63 +48,87 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func tappedAllClear(_ sender: UIButton) {
-        currentString = ""
-        totalString = ""
-        signLabel.text = ""
-        valueLabel.text = "0"
+        makeCurrentStringToEmpty()
+        makeTotalStringToEmpty()
+        makeSignLabelTextToEmpty()
+        makeValueLabelTextToZero()
+        makeStackViewToEmpty()
+    }
+    
+    private func makeCurrentStringToEmpty() {
+        currentString = SymbolNamespace.empty
+    }
+    
+    private func makeTotalStringToEmpty() {
+        totalString = SymbolNamespace.empty
+    }
+    
+    private func makeSignLabelTextToEmpty() {
+        signLabel.text = SymbolNamespace.empty
+    }
+    
+    private func makeValueLabelTextToZero() {
+        valueLabel.text = NumberNamespace.zero
+    }
+
+    private func makeStackViewToEmpty() {
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
     
     private func mapSign(sender: UIButton) -> String {
-        var sign: String = ""
         switch sender {
         case plusButton:
-            sign = "+"
+            return String(Operator.add.rawValue)
         case minusButton:
-            sign = "-"
+            return String(Operator.subtract.rawValue)
         case multiplyButton:
-            sign = "*"
+            return String(Operator.multiply.rawValue)
         case divideButton:
-            sign = "/"
+            return String(Operator.divide.rawValue)
         default:
-            sign = ""
+            return ""
         }
-        return sign
+    }
+    
+    private func determineTotalStringByDashCharacterCondition(value: String) {
+        if value.contains(NumberNamespace.minusSign) {
+            totalString += "&\(value.dropFirst())"
+        } else {
+            totalString += value
+        }
+    }
+    
+    private func initializeValueLabelandCurrentString() {
+        makeValueLabelTextToZero()
+        makeCurrentStringToEmpty()
+    }
+    private func addLabelandSign (value: String, sender: UIButton) {
+        addNewLabel(message: value, stackView: stackView)
+        signLabel.text = mapSign(sender: sender)
     }
     
     // 연산자 입력
     @IBAction private func tappedOperatorIntoEquation(_ sender: UIButton) {
-        if currentString.count == 0 && signLabel.text == "" {
+        guard currentString.count != 0 && valueLabel.text != SymbolNamespace.empty else {
             return
-        } else if totalString.isEmpty {
+        }
+        if totalString.isEmpty {
             guard let value = valueLabel.text else { return }
-            if value.contains("-") {
-                totalString += "&\(value.dropFirst())"
-            } else {
-                totalString += value
-            }
-            addNewLabel(message: value, stackView: stackView)
-            valueLabel.text = NumberNamespace.zero
-            signLabel.text = mapSign(sender: sender)
-            currentString = ""
+            determineTotalStringByDashCharacterCondition(value: value)
+            addLabelandSign(value: value, sender: sender)
+            initializeValueLabelandCurrentString()
+            
         } else {
             if valueLabel.text == NumberNamespace.zero {
                 signLabel.text = mapSign(sender: sender)
             } else {
                 guard let retrievedSign = signLabel.text else { return }
                 guard let retrievedValue = valueLabel.text else { return }
-                currentString = ""
+                makeCurrentStringToEmpty()
                 totalString += retrievedSign
-                if retrievedValue.contains("-") {
-                    totalString += "&\(retrievedValue.dropFirst())"
-                } else {
-                    totalString += retrievedValue
-                }
-                
-                addNewLabel(message: retrievedSign + retrievedValue, stackView: stackView)
-                valueLabel.text = NumberNamespace.zero
-                signLabel.text = mapSign(sender: sender)
-                currentString = ""
+                determineTotalStringByDashCharacterCondition(value: retrievedValue)
+                addLabelandSign(value: retrievedSign + retrievedValue, sender: sender)
+                initializeValueLabelandCurrentString()
             }
         }
     }
@@ -146,7 +170,7 @@ class ViewController: UIViewController {
             }
             currentString += NumberNamespace.dot
         default:
-            currentString += ""
+            currentString += SymbolNamespace.empty
         }
         valueLabel.text = currentString
     }
@@ -161,7 +185,7 @@ class ViewController: UIViewController {
             currentString = "\(sign)\(value)"
             addNewLabel(message: currentString, stackView: stackView)
             totalString += sign
-            if value.contains("-") {
+            if value.contains(Operator.subtract.rawValue) {
                 totalString += "&\(value.dropFirst())"
             } else {
                 totalString += value
@@ -180,25 +204,24 @@ class ViewController: UIViewController {
             } catch {
                 displaySignAndValueLabels(signMessage: "error", valueMessage: "error")
             }
-            signLabel.text = ""
-            totalString = ""
-            currentString = ""
+            signLabel.text = SymbolNamespace.empty
+            totalString = SymbolNamespace.empty
+            currentString = SymbolNamespace.empty
         }
     }
     
     @IBAction private func tappedCeExecution(sender: UIButton) {
         if currentString.isEmpty && totalString.isEmpty {
             valueLabel.text = NumberNamespace.zero
-            currentString = ""
         } else {
-            valueLabel.text = ""
-            currentString = ""
+            valueLabel.text = SymbolNamespace.empty
         }
+        currentString = SymbolNamespace.empty
     }
     
     @IBAction private func tappedPlusMinusSwap(sender: UIButton) {
         guard let value = valueLabel.text else { return }
-        if value.contains("-") {
+        if value.contains(Operator.subtract.rawValue) {
             valueLabel.text = String(value.dropFirst())
         } else {
             if value == NumberNamespace.zero {

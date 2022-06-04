@@ -12,7 +12,7 @@ enum ExpressionParser {
 
         var newOperands: [Double] = []
         operands.forEach {
-            if $0.contains("&") {
+            if $0.contains(SymbolNamespace.ampersand) {
                 newOperands.append(Double(String($0.dropFirst()))! * -1)
             } else {
                 newOperands.append(Double($0) ?? 0.0)

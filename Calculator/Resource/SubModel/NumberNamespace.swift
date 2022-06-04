@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct KeyPadNamespace {
+struct NumberNamespace {
     
     //MARK: - Number
     static let zero: String = "0"

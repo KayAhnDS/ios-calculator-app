@@ -45,7 +45,7 @@ class FormulaTest: XCTestCase {
         var equationTest = ExpressionParser.parse(from: equation)
         // then
         XCTAssertThrowsError(try equationTest.result()) { error in
-            XCTAssertEqual(error as? valueError, valueError.divideByZero)
+            XCTAssertEqual(error as? ValueError, ValueError.divideByZero)
         }
 
     }

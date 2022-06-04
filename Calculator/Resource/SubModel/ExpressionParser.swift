@@ -15,7 +15,7 @@ enum ExpressionParser {
             if $0.contains("&") {
                 newOperands.append(Double(String($0.dropFirst()))! * -1)
             } else {
-                newOperands.append(Double($0)!)
+                newOperands.append(Double($0) ?? 0.0)
             }
         }
         

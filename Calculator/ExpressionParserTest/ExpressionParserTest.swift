@@ -18,7 +18,7 @@ class ExpressionParserTest: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func test_returnsTrueWhenBothCountsOfOperandsAndOperatorsMatchesWithWhatEquationActuallyHas() throws {
+    func test_returnsTrueWhenBothCountsOfOperandsAndOperatorsMatchesWithWhatEquationActuallyHas() {
         // given
         let equation = "1000+200-300*4/5"
         let expectedOperandsCount = 5

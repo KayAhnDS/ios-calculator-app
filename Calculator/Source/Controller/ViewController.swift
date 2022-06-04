@@ -85,11 +85,11 @@ class ViewController: UIViewController {
             }
             addNewLabel(message: value, stackView: stackView)
             valueLabel.text = NumberNamespace.zero
-            signLabel.text = senderToSign(sender: sender)
+            signLabel.text = mapSign(sender: sender)
             currentString = ""
         } else {
             if valueLabel.text == NumberNamespace.zero {
-                signLabel.text = senderToSign(sender: sender)
+                signLabel.text = mapSign(sender: sender)
             } else {
                 guard let retrievedSign = signLabel.text else { return }
                 guard let retrievedValue = valueLabel.text else { return }
@@ -103,7 +103,7 @@ class ViewController: UIViewController {
                 
                 addNewLabel(message: retrievedSign + retrievedValue, stackView: stackView)
                 valueLabel.text = NumberNamespace.zero
-                signLabel.text = senderToSign(sender: sender)
+                signLabel.text = mapSign(sender: sender)
                 currentString = ""
             }
         }

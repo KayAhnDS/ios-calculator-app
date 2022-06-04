@@ -55,7 +55,7 @@ class ViewController: UIViewController {
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
     
-    private func senderToSign(sender: UIButton) -> String {
+    private func mapSign(sender: UIButton) -> String {
         var sign: String = ""
         switch sender {
         case plusButton:
@@ -84,11 +84,11 @@ class ViewController: UIViewController {
                 totalString += value
             }
             addNewLabel(message: value, stackView: stackView)
-            valueLabel.text = "0"
+            valueLabel.text = NumberNamespace.zero
             signLabel.text = senderToSign(sender: sender)
             currentString = ""
         } else {
-            if valueLabel.text == "0" {
+            if valueLabel.text == NumberNamespace.zero {
                 signLabel.text = senderToSign(sender: sender)
             } else {
                 guard let retrievedSign = signLabel.text else { return }
@@ -102,7 +102,7 @@ class ViewController: UIViewController {
                 }
                 
                 addNewLabel(message: retrievedSign + retrievedValue, stackView: stackView)
-                valueLabel.text = "0"
+                valueLabel.text = NumberNamespace.zero
                 signLabel.text = senderToSign(sender: sender)
                 currentString = ""
             }
@@ -113,38 +113,38 @@ class ViewController: UIViewController {
     @IBAction func tappedOperandIntoEquation(_ sender: UIButton) {
         switch sender {
         case oneButton:
-            currentString += "1"
+            currentString += NumberNamespace.one
         case twoButton:
-            currentString += "2"
+            currentString += NumberNamespace.two
         case threeButton:
-            currentString += "3"
+            currentString += NumberNamespace.three
         case fourButton:
-            currentString += "4"
+            currentString += NumberNamespace.four
         case fiveButton:
-            currentString += "5"
+            currentString += NumberNamespace.five
         case sixButton:
-            currentString += "6"
+            currentString += NumberNamespace.six
         case sevenButton:
-            currentString += "7"
+            currentString += NumberNamespace.seven
         case eightButton:
-            currentString += "8"
+            currentString += NumberNamespace.eight
         case nineButton:
-            currentString += "9"
+            currentString += NumberNamespace.nine
         case zeroButton:
-            if currentString == "0" {
+            if currentString == NumberNamespace.zero {
                 return
             }
-            currentString += "0"
+            currentString += NumberNamespace.zero
         case doubleZeroButton:
             if currentString.isEmpty {
                 return
             }
-            currentString += "00"
+            currentString += NumberNamespace.doubleZero
         case dotButton:
-            if currentString.isEmpty || currentString.contains(".") {
+            if currentString.isEmpty || currentString.contains(NumberNamespace.dot) {
                 return
             }
-            currentString += "."
+            currentString += NumberNamespace.dot
         default:
             currentString += ""
         }
@@ -188,7 +188,7 @@ class ViewController: UIViewController {
     
     @IBAction private func tappedCeExecution(sender: UIButton) {
         if currentString.isEmpty && totalString.isEmpty {
-            valueLabel.text = "0"
+            valueLabel.text = NumberNamespace.zero
             currentString = ""
         } else {
             valueLabel.text = ""
@@ -201,7 +201,7 @@ class ViewController: UIViewController {
         if value.contains("-") {
             valueLabel.text = String(value.dropFirst())
         } else {
-            if value == "0" {
+            if value == NumberNamespace.zero {
                 return
             }
             valueLabel.text = "-\(value)"

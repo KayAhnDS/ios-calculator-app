@@ -98,7 +98,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private func initializeValueLabelandCurrentString() {
+    private func resetValueLabelandCurrentString() {
         makeValueLabelTextToZero()
         makeCurrentStringToEmpty()
     }
@@ -116,7 +116,7 @@ class ViewController: UIViewController {
             guard let value = valueLabel.text else { return }
             determineTotalStringByDashCharacterCondition(value: value)
             addLabelandSign(value: value, sender: sender)
-            initializeValueLabelandCurrentString()
+            resetValueLabelandCurrentString()
             
         } else {
             if valueLabel.text == NumberNamespace.zero {
@@ -128,7 +128,7 @@ class ViewController: UIViewController {
                 totalString += retrievedSign
                 determineTotalStringByDashCharacterCondition(value: retrievedValue)
                 addLabelandSign(value: retrievedSign + retrievedValue, sender: sender)
-                initializeValueLabelandCurrentString()
+                resetValueLabelandCurrentString()
             }
         }
     }

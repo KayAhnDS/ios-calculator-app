@@ -11,6 +11,7 @@ enum ValueError: Error {
     case operandEmpty
     case operatorEmpty
     case divideByZero
+    case notString
     
     var message: String {
         switch self {
@@ -20,6 +21,8 @@ enum ValueError: Error {
             return "연산자가 없습니다!"
         case .divideByZero:
             return "0으로 나눌수 없습니다!"
+        case .notString:
+            return "문자열이 아닙니다!"
         }
     }
 }

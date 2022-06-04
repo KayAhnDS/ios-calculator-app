@@ -91,7 +91,7 @@ class ViewController: UIViewController {
     }
     
     private func determineTotalStringByDashCharacterCondition(value: String) {
-        if value.contains(NumberNamespace.minusSign) {
+        if value.contains(SymbolNamespace.subtractSign) {
             totalString += "&\(value.dropFirst())"
         } else {
             totalString += value
@@ -165,10 +165,10 @@ class ViewController: UIViewController {
             }
             currentString += NumberNamespace.doubleZero
         case dotButton:
-            if currentString.isEmpty || currentString.contains(NumberNamespace.dot) {
+            if currentString.isEmpty || currentString.contains(SymbolNamespace.dot) {
                 return
             }
-            currentString += NumberNamespace.dot
+            currentString += SymbolNamespace.dot
         default:
             currentString += SymbolNamespace.empty
         }

@@ -27,6 +27,8 @@ struct NumberNamespace {
 
 
 struct SymbolNamespace {
+    
+    //MARK: - Symbol
     static let empty: String = ""
     static let exclamation: String = "!"
     static let ampersand: String = "&"
@@ -36,5 +38,6 @@ struct SymbolNamespace {
     static let multiplySign: String = String(Operator.multiply.rawValue)
     static let divideSign: String = String(Operator.divide.rawValue)
     static let equalSign: String = "="
+    
     private init() { }
 }
